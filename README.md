@@ -26,7 +26,7 @@ Check out the interactive demo here: [Live PokeInvite Demo](https://poke-invite-
 
 ## 📂 Project Structure
 
-\`\`\`text
+```text
 POKEINVITE/
 ├── app.py                 # The main Flask web server
 ├── config.json            # Event details (Date, Time, Location, Text, Calendar data)
@@ -47,7 +47,7 @@ POKEINVITE/
 ├── docker-compose.yml     # Configuration for running the app in Docker
 ├── requirements.txt       # Python dependencies for Docker
 └── .gitignore             # Keeps secrets and guests' private data safe
-\`\`\`
+```
 
 ---
 
@@ -59,7 +59,7 @@ Create a `.env` file in the root directory to store your credentials and securit
 
 **⚠️ Docker Warning:** You MUST double every dollar sign (`$$`) in your generated password hash, otherwise Docker will mistake them for system variables and corrupt your password.
 
-\`\`\`env
+```env
 # Email Configuration (Use a 16-letter App Password if using Gmail)
 SMTP_EMAIL=your_email@gmail.com
 SMTP_PASSWORD=your_16_letter_app_password
@@ -67,11 +67,11 @@ SMTP_PASSWORD=your_16_letter_app_password
 # Admin Dashboard Security
 FLASK_SECRET_KEY=super-secret-random-key
 ADMIN_PASSWORD_HASH=scrypt:32768:8:1$$yourSalt$$yourHash
-\`\`\`
+```
 
 ### 2. Event Details (`config.json`)
 Edit this file to customize your party details. You can update this file while the server is running, and the changes will reflect instantly on the next page load. Note the ISO formatted strings (UTC) for Google Calendar generation.
-\`\`\`json
+```json
 {
     "title": "Fabrício's Party!",
     "message_template": "Be like {name} and catch the fun at my birthday!",
@@ -85,7 +85,7 @@ Edit this file to customize your party details. You can update this file while t
     "calendar_start": "20261012T170000Z",
     "calendar_end": "20261012T220000Z"
 }
-\`\`\`
+```
 
 ### 3. Translation (`lang.json`)
 All UI text is isolated in `lang.json`. To translate the app to a new language, simply edit the values in this file. Changes map instantly to the live Docker container.
@@ -98,21 +98,21 @@ If you ever want to add new Pokémon or regenerate the data, use the included pi
 
 **1. Download the Images:**
 This script downloads raw `.png` files directly from the source into the `pokemon_logos/` folder.
-\`\`\`bash
+```bash
 python download_images.py
-\`\`\`
+```
 
 **2. Compress the Images:**
 This script converts the heavy `.png` images into highly optimized `.webp` formats (reducing file size by ~80%) for instantaneous CDN streaming, then deletes the old PNGs.
-\`\`\`bash
+```bash
 python compress_images.py
-\`\`\`
+```
 
 **3. Process Colors & Names:**
 This script resizes the images, filters out dark outlines/transparent pixels, calculates the most vibrant predominant color, and pings the PokéAPI to get the correct character name. It outputs the final `refined_colors.json`.
-\`\`\`bash
+```bash
 python process_colors.py
-\`\`\`
+```
 
 ---
 
@@ -121,22 +121,22 @@ python process_colors.py
 It is recommended to use `uv` for blazing-fast dependency management.
 
 1. **Create and activate a virtual environment:**
-   \`\`\`bash
+   ```bash
    uv venv
    # On Windows:
    .venv\Scripts\activate
    # On Mac/Linux:
    source .venv/bin/activate
-   \`\`\`
+   ```
 2. **Install dependencies:**
-   \`\`\`bash
+   ```bash
    uv pip install -r requirements.txt
    uv pip install python-dotenv  # Required for local .env loading
-   \`\`\`
+   ```
 3. **Run the Flask server:**
-   \`\`\`bash
+   ```bash
    python app.py
-   \`\`\`
+   ```
 4. Open your browser to `http://localhost:5000`.
 
 ---
@@ -146,17 +146,17 @@ It is recommended to use `uv` for blazing-fast dependency management.
 This app is optimized to run via Docker using `gunicorn`. The `docker-compose.yml` file is configured to mount the `guests/` folder, `config.json`, and `lang.json` directly to your host machine so data is never lost and configurations can be updated live.
 
 1. **Build and start the container:**
-   \`\`\`bash
+   ```bash
    docker compose up -d --build
-   \`\`\`
+   ```
 2. **Check the logs (optional):**
-   \`\`\`bash
+   ```bash
    docker compose logs -f
-   \`\`\`
+   ```
 3. **Stop the container:**
-   \`\`\`bash
+   ```bash
    docker compose down
-   \`\`\`
+   ```
 
 ### Cloudflare Zero Trust Routing
 To expose this securely to the internet without opening router ports:
