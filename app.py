@@ -12,6 +12,7 @@ from flask import Flask, render_template, request, jsonify, send_from_directory,
 from werkzeug.security import check_password_hash
 from datetime import timedelta
 from dotenv import load_dotenv
+import time
 
 app = Flask(__name__)
 # Enable sessions for admin login
@@ -46,46 +47,10 @@ def get_contrast_color(hex_color):
     return "#222222" if luminance > 140 else "#ffffff"
 
 def send_confirmation_email(name, email, pokemon_name, color, contrast_color, config, lang, cal_link):
-    sender_email = os.getenv("SMTP_EMAIL")
-    sender_password = os.getenv("SMTP_PASSWORD")
-    
-    if not sender_email or sender_email == "your_email@gmail.com":
-        print(f"Skipping email to {email}: SMTP credentials not set in .env")
-        return
-
-    subject = config.get("email_subject", "Party Invitation!")
-    body_template = config.get("email_message", "Thanks for RSVPing, {guest_name}!")
-    body_text = body_template.replace("{guest_name}", name)
-    
-    html = f"""
-    <html>
-        <body style="font-family: sans-serif; text-align: center; background-color: #1a1a1a; color: white; padding: 20px;">
-            <div style="background-color: #242424; border: 4px solid {color}; padding: 30px; border-radius: 15px; max-width: 500px; margin: 0 auto;">
-                <h1 style="color: #ffcb05; text-shadow: 2px 2px 0 #3b4cca;">{config.get('title')}</h1>
-                <p style="font-size: 18px; line-height: 1.5;">{body_text}</p>
-                <div style="background-color: {color}; color: {contrast_color}; padding: 15px; border-radius: 10px; margin-top: 20px;">
-                    <strong>{lang.get('date_label')}</strong> {config.get('date')}<br>
-                    <strong>{lang.get('location_label')}</strong> {config.get('location')}<br>
-                    <strong>{lang.get('time_label')}</strong> {config.get('time')}
-                </div>
-                <div style="margin-top: 25px;">
-                    <a href="{cal_link}" style="background-color: {color}; color: {contrast_color}; padding: 12px 20px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block;">{lang.get('btn_add_calendar')}</a>
-                </div>
-            </div>
-        </body>
-    </html>
-    """
-    
-    msg = MIMEMultipart("alternative")
-    msg['Subject'] = subject
-    msg['From'] = f"{config.get('title')} <{sender_email}>" 
-    msg['To'] = email
-    msg.attach(MIMEText(html, "html"))
-    
-    server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
-    server.login(sender_email, sender_password)
-    server.send_message(msg)
-    server.quit()
+    # Simulate a network delay so the user sees the "Sending..." button state
+    time.sleep(1.5) 
+    print(f"DEMO MODE: Simulated email sent to {email}")
+    return True
 
 @app.route('/favicon.ico')
 def favicon():
@@ -153,17 +118,17 @@ def rsvp():
         if guest.get('email', '').strip().lower() == email_lower:
             return jsonify({"success": False, "message": lang.get("msg_error_duplicate")}), 400
 
-    guests.append({
-        "name": name, 
-        "email": email, 
-        "pokemon": data.get('pokemon_name'),
-        "color": data.get('color'),                   
-        "contrast_color": data.get('contrast_color'), 
-        "timestamp": str(datetime.now())
-    })
+    # guests.append({
+    #     "name": name, 
+    #     "email": email, 
+    #     "pokemon": data.get('pokemon_name'),
+    #     "color": data.get('color'),                   
+    #     "contrast_color": data.get('contrast_color'), 
+    #     "timestamp": str(datetime.now())
+    # })
     
-    with open(guest_file, 'w', encoding='utf-8') as f:
-        json.dump(guests, f, indent=4)
+    # with open(guest_file, 'w', encoding='utf-8') as f:
+    #     json.dump(guests, f, indent=4)
         
     # --- Generate Google Calendar Link ---
     title = quote(config.get('title', 'Party!'))
