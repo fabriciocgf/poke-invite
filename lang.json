@@ -32,5 +32,8 @@
     "admin_col_pokemon": "Pokémon",
     "admin_col_date": "Date",
     "admin_col_actions": "Actions",
-    "admin_btn_delete": "Delete"
+    "admin_btn_delete": "Delete",
+    "admin_no_guests": "No guests yet.",
+    "admin_confirm_delete": "Are you sure you want to remove this guest?",
+    "admin_error_delete": "Error removing guest."
 }
