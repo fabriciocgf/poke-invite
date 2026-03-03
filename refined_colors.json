@@ -1,0 +1,502 @@
+[
+    {
+        "filename": "0001.webp",
+        "name": "Bulbasaur",
+        "predominant_color": "#64b642"
+    },
+    {
+        "filename": "0006.webp",
+        "name": "Charizard",
+        "predominant_color": "#e75f3f"
+    },
+    {
+        "filename": "0007.webp",
+        "name": "Squirtle",
+        "predominant_color": "#00aad9"
+    },
+    {
+        "filename": "0009.webp",
+        "name": "Blastoise",
+        "predominant_color": "#00aad9"
+    },
+    {
+        "filename": "0025.webp",
+        "name": "Pikachu",
+        "predominant_color": "#e70011"
+    },
+    {
+        "filename": "0026.webp",
+        "name": "Raichu",
+        "predominant_color": "#f4aa19"
+    },
+    {
+        "filename": "0037.webp",
+        "name": "Vulpix",
+        "predominant_color": "#e88d75"
+    },
+    {
+        "filename": "0038.webp",
+        "name": "Ninetales",
+        "predominant_color": "#e88d75"
+    },
+    {
+        "filename": "0054.webp",
+        "name": "Psyduck",
+        "predominant_color": "#2db1d9"
+    },
+    {
+        "filename": "0058.webp",
+        "name": "Growlithe",
+        "predominant_color": "#feeabf"
+    },
+    {
+        "filename": "0059.webp",
+        "name": "Arcanine",
+        "predominant_color": "#feeabf"
+    },
+    {
+        "filename": "0079.webp",
+        "name": "Slowpoke",
+        "predominant_color": "#a0cfef"
+    },
+    {
+        "filename": "0094.webp",
+        "name": "Gengar",
+        "predominant_color": "#546a90"
+    },
+    {
+        "filename": "0104.webp",
+        "name": "Cubone",
+        "predominant_color": "#b57c44"
+    },
+    {
+        "filename": "0131.webp",
+        "name": "Lapras",
+        "predominant_color": "#5a92cd"
+    },
+    {
+        "filename": "0132.webp",
+        "name": "Ditto",
+        "predominant_color": "#a39ac8"
+    },
+    {
+        "filename": "0133.webp",
+        "name": "Eevee",
+        "predominant_color": "#e3a759"
+    },
+    {
+        "filename": "0134.webp",
+        "name": "Vaporeon",
+        "predominant_color": "#9ed6de"
+    },
+    {
+        "filename": "0135.webp",
+        "name": "Jolteon",
+        "predominant_color": "#f7e501"
+    },
+    {
+        "filename": "0143.webp",
+        "name": "Snorlax",
+        "predominant_color": "#6d9fac"
+    },
+    {
+        "filename": "0149.webp",
+        "name": "Dragonite",
+        "predominant_color": "#d7a400"
+    },
+    {
+        "filename": "0151.webp",
+        "name": "Mew",
+        "predominant_color": "#f1b3b8"
+    },
+    {
+        "filename": "0155.webp",
+        "name": "Cyndaquil",
+        "predominant_color": "#e75f3f"
+    },
+    {
+        "filename": "0157.webp",
+        "name": "Typhlosion",
+        "predominant_color": "#e75f3f"
+    },
+    {
+        "filename": "0158.webp",
+        "name": "Totodile",
+        "predominant_color": "#00aad9"
+    },
+    {
+        "filename": "0181.webp",
+        "name": "Ampharos",
+        "predominant_color": "#ffe460"
+    },
+    {
+        "filename": "0194.webp",
+        "name": "Wooper",
+        "predominant_color": "#81b7e5"
+    },
+    {
+        "filename": "0195.webp",
+        "name": "Quagsire",
+        "predominant_color": "#81b7e5"
+    },
+    {
+        "filename": "0196.webp",
+        "name": "Espeon",
+        "predominant_color": "#be92bc"
+    },
+    {
+        "filename": "0197.webp",
+        "name": "Umbreon",
+        "predominant_color": "#3d4e6f"
+    },
+    {
+        "filename": "0212.webp",
+        "name": "Scizor",
+        "predominant_color": "#8cc66b"
+    },
+    {
+        "filename": "0214.webp",
+        "name": "Heracross",
+        "predominant_color": "#58b063"
+    },
+    {
+        "filename": "0229.webp",
+        "name": "Houndoom",
+        "predominant_color": "#75161d"
+    },
+    {
+        "filename": "0248.webp",
+        "name": "Tyranitar",
+        "predominant_color": "#c3905d"
+    },
+    {
+        "filename": "0249.webp",
+        "name": "Lugia",
+        "predominant_color": "#1f1d62"
+    },
+    {
+        "filename": "0254.webp",
+        "name": "Sceptile",
+        "predominant_color": "#64b642"
+    },
+    {
+        "filename": "0257.webp",
+        "name": "Blaziken",
+        "predominant_color": "#e75f3f"
+    },
+    {
+        "filename": "0258.webp",
+        "name": "Mudkip",
+        "predominant_color": "#00aad9"
+    },
+    {
+        "filename": "0260.webp",
+        "name": "Swampert",
+        "predominant_color": "#00aad9"
+    },
+    {
+        "filename": "0282.webp",
+        "name": "Gardevoir",
+        "predominant_color": "#cc9fc7"
+    },
+    {
+        "filename": "0286.webp",
+        "name": "Breloom",
+        "predominant_color": "#82c26f"
+    },
+    {
+        "filename": "0302.webp",
+        "name": "Sableye",
+        "predominant_color": "#14718f"
+    },
+    {
+        "filename": "0303.webp",
+        "name": "Mawile",
+        "predominant_color": "#d3a0b3"
+    },
+    {
+        "filename": "0306.webp",
+        "name": "Aggron",
+        "predominant_color": "#aca474"
+    },
+    {
+        "filename": "0330.webp",
+        "name": "Flygon",
+        "predominant_color": "#ceba48"
+    },
+    {
+        "filename": "0334.webp",
+        "name": "Altaria",
+        "predominant_color": "#abdbf2"
+    },
+    {
+        "filename": "0350.webp",
+        "name": "Milotic",
+        "predominant_color": "#fff1af"
+    },
+    {
+        "filename": "0354.webp",
+        "name": "Banette",
+        "predominant_color": "#b291a3"
+    },
+    {
+        "filename": "0359.webp",
+        "name": "Absol",
+        "predominant_color": "#566b86"
+    },
+    {
+        "filename": "0363.webp",
+        "name": "Spheal",
+        "predominant_color": "#76c1ec"
+    },
+    {
+        "filename": "0376.webp",
+        "name": "Metagross",
+        "predominant_color": "#01afd2"
+    },
+    {
+        "filename": "0384.webp",
+        "name": "Rayquaza",
+        "predominant_color": "#009f50"
+    },
+    {
+        "filename": "0385.webp",
+        "name": "Jirachi",
+        "predominant_color": "#ffe692"
+    },
+    {
+        "filename": "0389.webp",
+        "name": "Torterra",
+        "predominant_color": "#009f50"
+    },
+    {
+        "filename": "0392.webp",
+        "name": "Infernape",
+        "predominant_color": "#e75f3f"
+    },
+    {
+        "filename": "0393.webp",
+        "name": "Piplup",
+        "predominant_color": "#00aad9"
+    },
+    {
+        "filename": "0403.webp",
+        "name": "Shinx",
+        "predominant_color": "#f4ee5c"
+    },
+    {
+        "filename": "0405.webp",
+        "name": "Luxray",
+        "predominant_color": "#f4ee5c"
+    },
+    {
+        "filename": "0418.webp",
+        "name": "Buizel",
+        "predominant_color": "#5fc2d7"
+    },
+    {
+        "filename": "0445.webp",
+        "name": "Garchomp",
+        "predominant_color": "#4b516f"
+    },
+    {
+        "filename": "0448.webp",
+        "name": "Lucario",
+        "predominant_color": "#00a4e3"
+    },
+    {
+        "filename": "0470.webp",
+        "name": "Leafeon",
+        "predominant_color": "#5eb782"
+    },
+    {
+        "filename": "0471.webp",
+        "name": "Glaceon",
+        "predominant_color": "#d2ebfa"
+    },
+    {
+        "filename": "0472.webp",
+        "name": "Gliscor",
+        "predominant_color": "#837aa2"
+    },
+    {
+        "filename": "0475.webp",
+        "name": "Gallade",
+        "predominant_color": "#cc9fc7"
+    },
+    {
+        "filename": "0487.webp",
+        "name": "Giratina-altered",
+        "predominant_color": "#edc401"
+    },
+    {
+        "filename": "0491.webp",
+        "name": "Darkrai",
+        "predominant_color": "#598e8c"
+    },
+    {
+        "filename": "0492.webp",
+        "name": "Shaymin-land",
+        "predominant_color": "#cddf7b"
+    },
+    {
+        "filename": "0494.webp",
+        "name": "Victini",
+        "predominant_color": "#ea5a22"
+    },
+    {
+        "filename": "0501.webp",
+        "name": "Oshawott",
+        "predominant_color": "#00aad9"
+    },
+    {
+        "filename": "0545.webp",
+        "name": "Scolipede",
+        "predominant_color": "#a47eaf"
+    },
+    {
+        "filename": "0570.webp",
+        "name": "Zorua",
+        "predominant_color": "#4b516f"
+    },
+    {
+        "filename": "0571.webp",
+        "name": "Zoroark",
+        "predominant_color": "#ac0832"
+    },
+    {
+        "filename": "0579.webp",
+        "name": "Reuniclus",
+        "predominant_color": "#d19dc5"
+    },
+    {
+        "filename": "0595.webp",
+        "name": "Joltik",
+        "predominant_color": "#d3de00"
+    },
+    {
+        "filename": "0609.webp",
+        "name": "Chandelure",
+        "predominant_color": "#524e7f"
+    },
+    {
+        "filename": "0623.webp",
+        "name": "Golurk",
+        "predominant_color": "#67b4b5"
+    },
+    {
+        "filename": "0635.webp",
+        "name": "Hydreigon",
+        "predominant_color": "#7b8aaa"
+    },
+    {
+        "filename": "0637.webp",
+        "name": "Volcarona",
+        "predominant_color": "#ec6c01"
+    },
+    {
+        "filename": "0658.webp",
+        "name": "Greninja",
+        "predominant_color": "#00aad9"
+    },
+    {
+        "filename": "0677.webp",
+        "name": "Espurr",
+        "predominant_color": "#aa8ab7"
+    },
+    {
+        "filename": "0681.webp",
+        "name": "Aegislash-shield",
+        "predominant_color": "#ecdf7b"
+    },
+    {
+        "filename": "0700.webp",
+        "name": "Sylveon",
+        "predominant_color": "#f09cb4"
+    },
+    {
+        "filename": "0704.webp",
+        "name": "Goomy",
+        "predominant_color": "#bdb6d6"
+    },
+    {
+        "filename": "0706.webp",
+        "name": "Goodra",
+        "predominant_color": "#bdb6d6"
+    },
+    {
+        "filename": "0715.webp",
+        "name": "Noivern",
+        "predominant_color": "#95d2e2"
+    },
+    {
+        "filename": "0722.webp",
+        "name": "Rowlet",
+        "predominant_color": "#64b642"
+    },
+    {
+        "filename": "0724.webp",
+        "name": "Decidueye",
+        "predominant_color": "#64b642"
+    },
+    {
+        "filename": "0730.webp",
+        "name": "Primarina",
+        "predominant_color": "#00aad9"
+    },
+    {
+        "filename": "0754.webp",
+        "name": "Lurantis",
+        "predominant_color": "#a4c981"
+    },
+    {
+        "filename": "0768.webp",
+        "name": "Golisopod",
+        "predominant_color": "#017ca7"
+    },
+    {
+        "filename": "0778.webp",
+        "name": "Mimikyu-disguised",
+        "predominant_color": "#f1ebbb"
+    },
+    {
+        "filename": "0802.webp",
+        "name": "Marshadow",
+        "predominant_color": "#6d4937"
+    },
+    {
+        "filename": "0807.webp",
+        "name": "Zeraora",
+        "predominant_color": "#f4c101"
+    },
+    {
+        "filename": "0849.webp",
+        "name": "Toxtricity-amped",
+        "predominant_color": "#8567a3"
+    },
+    {
+        "filename": "0872.webp",
+        "name": "Snom",
+        "predominant_color": "#b5c8dd"
+    },
+    {
+        "filename": "0887.webp",
+        "name": "Dragapult",
+        "predominant_color": "#80c7bf"
+    },
+    {
+        "filename": "0937.webp",
+        "name": "Ceruledge",
+        "predominant_color": "#7c7dba"
+    },
+    {
+        "filename": "0959.webp",
+        "name": "Tinkaton",
+        "predominant_color": "#5a458e"
+    },
+    {
+        "filename": "0980.webp",
+        "name": "Clodsire",
+        "predominant_color": "#b599ba"
+    }
+]

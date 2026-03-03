@@ -1,0 +1,16 @@
+services:
+  web:
+    build: .
+    container_name: poke-invite-web
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      # Exposes the app to your PC's localhost:5000
+      - "5000:5000"
+    volumes:
+      # Keeps your guest list safe on your PC
+      - ./guests:/app/guests
+      # Allows you to edit the event details live
+      - ./config.json:/app/config.json
+      - ./lang.json:/app/lang.json

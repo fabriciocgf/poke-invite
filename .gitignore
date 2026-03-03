@@ -1,0 +1,38 @@
+# -----------------------------
+# Secrets & Environment
+# -----------------------------
+.env
+
+# -----------------------------
+# User Generated Data (Privacy)
+# -----------------------------
+# We ignore the guests folder so you don't accidentally leak 
+# your friends' names and emails to the public!
+guests/
+
+# -----------------------------
+# Python & Virtual Environments
+# -----------------------------
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# -----------------------------
+# OS & Editor Files
+# -----------------------------
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# -----------------------------
+# Optional: Scraped Data
+# -----------------------------
+# If you don't want to upload the 70+ images to GitHub, uncomment the line below.
+# However, if you want your repo to work immediately for anyone who clones it, 
+# leave it commented out so the images upload!
+# pokemon_logos/

@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ config.title }}</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('favicon') }}">
+    <link href="https://fonts.cdnfonts.com/css/pokemon-solid" rel="stylesheet">
+    
+    <script>
+        const configTheme = {{ config.get('theme', 'auto') | tojson }};
+        let currentTheme = localStorage.getItem('userTheme');
+        
+        if (!currentTheme) {
+            if (configTheme === 'dark') currentTheme = 'dark';
+            else if (configTheme === 'light') currentTheme = 'light';
+            else if (configTheme === 'auto') {
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) currentTheme = 'dark';
+                else currentTheme = 'light';
+            }
+        }
+        document.documentElement.setAttribute('data-theme', currentTheme);
+    </script>
+
+    <style>
+        /* CSS Variables for Theming */
+        :root {
+            --bg-grad: radial-gradient(circle, #ffffff 0%, {{ color }} 180%);
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --text-main: #222222;
+            --shadow-color: rgba(0, 0, 0, 0.15);
+            --border-color: {{ color }};
+            --dropdown-bg: #ffffff;
+            --badge-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        :root[data-theme="dark"] {
+            --bg-grad: radial-gradient(circle, {{ color }} 0%, #111111 80%);
+            --card-bg: rgba(0, 0, 0, 0.75);
+            --text-main: #ffffff;
+            --shadow-color: rgba(0, 0, 0, 0.8);
+            --dropdown-bg: rgba(255, 255, 255, 0.9);
+            --badge-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Base Layout */
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column; 
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-grad);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+        .card {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px var(--shadow-color);
+            max-width: 500px;
+            width: 100%;
+            border: 4px solid var(--border-color);
+            backdrop-filter: blur(10px);
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        /* Typography & Images */
+        .pokemon-font {
+            font-family: 'Pokemon Solid', sans-serif;
+            color: #ffcb05; 
+            text-shadow: 2px 2px 0 #3b4cca, -2px -2px 0 #3b4cca, 2px -2px 0 #3b4cca, -2px 2px 0 #3b4cca; 
+            font-size: 3em;
+            margin: 0 0 10px 0;
+            letter-spacing: 3px;
+            line-height: 1.2;
+        }
+        img {
+            max-width: 220px;
+            filter: drop-shadow(0 0 20px {{ color }});
+            margin: 20px 0;
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        .message {
+            font-size: 1.4em;
+            line-height: 1.6; 
+            margin-bottom: 25px;
+        }
+        .highlight-badge {
+            font-weight: bold;
+            text-transform: uppercase;
+            padding: 4px 12px;
+            border-radius: 8px;
+            box-shadow: var(--badge-shadow);
+            display: inline-block;
+            transition: box-shadow 0.3s ease;
+        }
+        .details {
+            font-size: 1.1em;
+            background: {{ color }};
+            color: {{ contrast_color }}; 
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+        
+        /* Controls & Buttons */
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+            border-top: 1px solid rgba(128,128,128,0.3);
+            padding-top: 20px;
+        }
+        .primary-btn {
+            width: 80%;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            font-size: 1.1em;
+            cursor: pointer;
+            font-family: inherit;
+            background-color: {{ color }};
+            color: {{ contrast_color }}; 
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transition: transform 0.2s, filter 0.2s;
+        }
+        .primary-btn:hover {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+        .toggle-options-btn {
+            background: none;
+            border: none;
+            color: var(--text-main);
+            font-size: 0.9em;
+            cursor: pointer;
+            opacity: 0.7;
+            text-decoration: underline;
+            margin-top: 5px;
+        }
+        .toggle-options-btn:hover {
+            opacity: 1;
+        }
+        
+        /* Expandable Menu */
+        .more-options {
+            display: none; 
+            flex-direction: column;
+            gap: 12px;
+            width: 80%;
+            margin-top: 10px;
+            padding: 15px;
+            background: rgba(128, 128, 128, 0.1);
+            border-radius: 10px;
+            animation: fadeIn 0.3s ease;
+        }
+        .more-options.show {
+            display: flex; 
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        select, .theme-btn {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        select {
+            border: 1px solid rgba(128,128,128,0.3);
+            background: var(--dropdown-bg);
+            color: #333;
+            font-weight: bold;
+        }
+        .theme-btn {
+            background-color: transparent;
+            border: 2px solid {{ color }};
+            color: var(--text-main);
+            font-weight: bold;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        .theme-btn:hover {
+            background-color: {{ color }};
+            color: {{ contrast_color }};
+        }
+
+        /* RSVP Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+        .modal-overlay.show { display: flex; }
+        .modal-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            border: 3px solid var(--border-color);
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 10px 30px var(--shadow-color);
+        }
+        .modal-card input {
+            width: 90%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid rgba(128,128,128,0.5);
+            font-size: 1em;
+            background: var(--dropdown-bg);
+            color: #333;
+        }
+        .btn-group {
+            display: flex; 
+            justify-content: center; /* This perfectly centers the buttons! */
+            gap: 15px; 
+            margin-top: 15px;
+            width: 100%;
+        }
+        .btn-group .primary-btn {
+            width: auto; /* Overrides the main 80% width */
+            flex: 1;
+            max-width: 150px; /* Keeps them looking neat */
+        }
+        .cancel-btn {
+            background: transparent;
+            color: var(--text-main);
+            border: 2px solid gray;
+            box-shadow: none;
+        }
+        .rsvp-highlight {
+            font-size: 1.5em;
+            color: {{ color }};
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        /* Baked-in Message Styles */
+        #rsvpMessage {
+            display: none;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+        }
+        #rsvpMessage.success {
+            display: block;
+            background: rgba(46, 204, 113, 0.15);
+            color: #2ecc71;
+            border: 1px solid #2ecc71;
+        }
+        #rsvpMessage.error {
+            display: block;
+            background: rgba(231, 76, 60, 0.15);
+            color: #e74c3c;
+            border: 1px solid #e74c3c;
+        }
+
+        /* Developer Footer */
+        .footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+            opacity: 0.8;
+            font-weight: 500;
+        }
+        .footer a {
+            color: {{ color }};
+            text-decoration: none;
+            font-weight: bold;
+            padding: 2px 6px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 4px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .footer a:hover {
+            background: {{ color }};
+            color: {{ contrast_color }};
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1 class="pokemon-font">{{ config.title }}</h1>
+        <img src="/pokemon_logos/{{ image }}" alt="{{ pokemon.name }}">
+        
+        <div class="message">{{ message | safe }}</div>
+        
+        <div class="details">
+            <b>{{ lang.date_label }}</b> {{ config.date }}<br>
+            <b>{{ lang.location_label }}</b> {{ config.location }}<br>
+            <b>{{ lang.time_label }}</b> {{ config.time }}
+        </div>
+
+        <div class="controls">
+            <button class="primary-btn" style="transform: scale(1.05); margin-bottom: 5px;" onclick="openModal()">{{ lang.btn_rsvp_main }}</button>
+            <button class="primary-btn" style="background: transparent; color: var(--text-main); border: 2px solid {{ color }}; text-shadow: none; box-shadow: none;" onclick="window.location.href='/'">{{ lang.btn_reroll }}</button>
+            
+            <button class="toggle-options-btn" onclick="toggleOptionsPanel()">{{ lang.btn_more_options }}</button>
+
+            <div id="optionsPanel" class="more-options">
+                <select id="pokemonSelect" onchange="selectPokemon()">
+                    <option value="">{{ lang.select_pokemon }}</option>
+                    {% for p in all_pokemon %}
+                        {% set poke_id = p.filename.split('.')[0] | int %}
+                        <option value="{{ poke_id }}" {% if pokemon.filename == p.filename %}selected{% endif %}>
+                            #{{ poke_id }} - {{ p.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+                
+                {% if config.get('show_theme_button', true) %}
+                    <button class="theme-btn" onclick="toggleTheme()">{{ lang.btn_toggle_theme }}</button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        {{ lang.footer_dev }} <a href="https://github.com/fabriciocgf/" target="_blank">fabriciocgf</a>
+    </div>
+
+    <div id="rsvpModal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="rsvp-highlight" id="rsvpTitle">{{ lang.modal_title }}</div>
+            <p style="margin-top: 0;" id="rsvpInstructions">{{ lang.modal_instructions }}</p>
+            
+            <div id="rsvpMessage"></div>
+            
+            <input type="text" id="guestName" placeholder="{{ lang.placeholder_name }}" required>
+            <input type="email" id="guestEmail" placeholder="{{ lang.placeholder_email }}" required>
+            
+            <div class="btn-group">
+                <button class="primary-btn cancel-btn" onclick="closeModal()" id="cancelBtn">{{ lang.btn_cancel }}</button>
+                <button class="primary-btn" onclick="submitRSVP()" id="submitBtn">{{ lang.btn_confirm }}</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Pass the Python lang dictionary to Javascript!
+        const langVars = {{ lang | tojson }};
+
+        function selectPokemon() {
+            const select = document.getElementById('pokemonSelect');
+            if (select.value) {
+                window.location.href = '/?id=' + select.value;
+            }
+        }
+
+        function toggleTheme() {
+            const doc = document.documentElement;
+            const currentTheme = doc.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            doc.setAttribute('data-theme', newTheme);
+            localStorage.setItem('userTheme', newTheme);
+        }
+
+        function toggleOptionsPanel() {
+            document.getElementById('optionsPanel').classList.toggle('show');
+        }
+
+        function openModal() { 
+            const modal = document.getElementById('rsvpModal');
+            modal.classList.add('show'); 
+            
+            document.getElementById('rsvpMessage').className = '';
+            document.getElementById('rsvpMessage').style.display = 'none';
+            document.getElementById('guestName').style.display = 'inline-block';
+            document.getElementById('guestName').value = '';
+            document.getElementById('guestEmail').style.display = 'inline-block';
+            document.getElementById('guestEmail').value = '';
+            document.getElementById('submitBtn').style.display = 'inline-block';
+            document.getElementById('submitBtn').innerText = langVars.btn_confirm;
+            document.getElementById('submitBtn').disabled = false;
+            document.getElementById('cancelBtn').innerText = langVars.btn_cancel;
+            document.getElementById('rsvpInstructions').style.display = 'block';
+            document.getElementById('rsvpTitle').innerText = langVars.modal_title;
+        }
+
+        function closeModal() { 
+            document.getElementById('rsvpModal').classList.remove('show'); 
+        }
+
+        function submitRSVP() {
+            const name = document.getElementById('guestName').value;
+            const email = document.getElementById('guestEmail').value;
+            const btn = document.getElementById('submitBtn');
+            const msgBox = document.getElementById('rsvpMessage');
+
+            msgBox.className = '';
+            msgBox.style.display = 'none';
+
+            if (!name || !email) {
+                msgBox.innerText = langVars.msg_error_empty;
+                msgBox.className = 'error';
+                msgBox.style.display = 'block';
+                return;
+            }
+
+            btn.innerText = langVars.btn_sending;
+            btn.disabled = true;
+
+            fetch('/rsvp', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: name,
+                    email: email,
+                    pokemon_name: "{{ pokemon.name }}",
+                    color: "{{ color }}",
+                    contrast_color: "{{ contrast_color }}"
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                msgBox.innerText = data.message;
+                msgBox.style.display = 'block'; 
+                
+                if (data.success) {
+                    msgBox.className = 'success';
+                    
+                    document.getElementById('guestName').style.display = 'none';
+                    document.getElementById('guestEmail').style.display = 'none';
+                    document.getElementById('rsvpInstructions').style.display = 'none';
+                    btn.style.display = 'none'; 
+                    
+                    document.getElementById('cancelBtn').innerText = langVars.btn_close;
+                } else {
+                    msgBox.className = 'error';
+                    btn.innerText = langVars.btn_confirm; 
+                    btn.disabled = false;
+                }
+            })
+            .catch(err => {
+                msgBox.innerText = langVars.msg_error_server;
+                msgBox.className = 'error';
+                msgBox.style.display = 'block'; 
+                btn.innerText = langVars.btn_confirm;
+                btn.disabled = false;
+            });
+        }
+    </script>
+
+</body>
+</html>

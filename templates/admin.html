@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ lang.admin_title }}</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('favicon') }}">
+    <link href="https://fonts.cdnfonts.com/css/pokemon-solid" rel="stylesheet">
+    <style>
+        body {
+            margin: 0; min-height: 100vh; display: flex; flex-direction: column; 
+            align-items: center; background: #1a1a1a; color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px;
+        }
+        .card {
+            background: #242424; padding: 40px; border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); width: 100%; max-width: 800px;
+            text-align: center; border: 2px solid #333;
+        }
+        h1 { font-family: 'Pokemon Solid', sans-serif; color: #ffcb05; letter-spacing: 2px; }
+        input {
+            width: 80%; padding: 12px; margin: 10px 0; border-radius: 8px;
+            border: 1px solid #555; background: #333; color: white;
+        }
+        button, .btn {
+            background: #ffcb05; color: #222; border: none; padding: 10px 20px;
+            border-radius: 8px; font-weight: bold; cursor: pointer; text-decoration: none;
+            display: inline-block; margin: 5px; font-family: inherit; font-size: 1em;
+        }
+        .btn-danger { background: #e74c3c; color: white; }
+        .btn-outline { background: transparent; border: 2px solid #ffcb05; color: #ffcb05; }
+        .header-actions { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap;}
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; text-align: left; background: #333; border-radius: 10px; overflow: hidden; }
+        th, td { padding: 12px 15px; border-bottom: 1px solid #444; }
+        th { background: #111; color: #ffcb05; font-weight: bold; }
+        tr:hover { background: #3a3a3a; }
+        .badge { padding: 4px 10px; border-radius: 5px; font-weight: bold; font-size: 0.85em; }
+        .error { color: #e74c3c; font-weight: bold; margin-bottom: 15px;}
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        {% if login_required %}
+            <h1>{{ lang.admin_login_title }}</h1>
+            {% if error %}<div class="error">{{ error }}</div>{% endif %}
+            <form method="POST">
+                <input type="password" name="password" placeholder="{{ lang.admin_password_placeholder }}" required>
+                <br>
+                <button type="submit" style="margin-top: 15px;">{{ lang.admin_btn_login }}</button>
+            </form>
+        {% else %}
+            <div class="header-actions">
+                <h1>{{ lang.admin_title }} ({{ guests|length }})</h1>
+                <div>
+                    <a href="/admin/export" class="btn">{{ lang.admin_btn_export }}</a>
+                    <a href="/admin/logout" class="btn btn-outline">{{ lang.admin_btn_logout }}</a>
+                </div>
+            </div>
+
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>{{ lang.admin_col_name }}</th>
+                            <th>{{ lang.admin_col_email }}</th>
+                            <th>{{ lang.admin_col_pokemon }}</th>
+                            <th>{{ lang.admin_col_actions }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for g in guests %}
+                        <tr id="row-{{ loop.index }}">
+                            <td>{{ g.name }}</td>
+                            <td>{{ g.email }}</td>
+                            <td><span class="badge" style="background: {{ g.color }}; color: {{ g.contrast_color }};">{{ g.pokemon }}</span></td>
+                            <td>
+                                <button class="btn btn-danger" style="padding: 5px 10px; font-size: 0.8em;" onclick="deleteGuest('{{ g.email }}', 'row-{{ loop.index }}')">{{ lang.admin_btn_delete }}</button>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="4" style="text-align: center;">Nenhum convidado ainda.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    </div>
+
+    <script>
+        function deleteGuest(email, rowId) {
+            if (confirm("Tem certeza que deseja remover este convidado?")) {
+                fetch('/admin/delete', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: email })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById(rowId).style.display = 'none';
+                    } else {
+                        alert("Erro ao remover convidado.");
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>

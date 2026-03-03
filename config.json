@@ -1,0 +1,13 @@
+{
+    "title": "Festa do Fabrício!",
+    "message_template": "Faça como o {name} e venha capturar a diversão no meu aniversário!",
+    "date": "Sábado, 12 de Outubro",
+    "location": "Cidade de Pallet (Minha Casa)",
+    "time": "14:00 - Temos que pegar!",
+    "theme": "auto",
+    "show_theme_button": true,
+    "email_subject": "Você está oficialmente convidado! 🎉",
+    "email_message": "Obrigado por confirmar presença, {guest_name}! Mal podemos esperar para te ver lá. Não esqueça de trazer a sua Pokédex!",
+    "calendar_start": "20261012T170000Z",
+    "calendar_end": "20261012T220000Z"
+}
