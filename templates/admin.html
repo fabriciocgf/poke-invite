@@ -81,7 +81,7 @@
                         </tr>
                         {% else %}
                         <tr>
-                            <td colspan="4" style="text-align: center;">Nenhum convidado ainda.</td>
+                            <td colspan="4" style="text-align: center;">{{ lang.admin_no_guests }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -91,23 +91,30 @@
     </div>
 
     <script>
-        function deleteGuest(email, rowId) {
-            if (confirm("Tem certeza que deseja remover este convidado?")) {
-                fetch('/admin/delete', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email: email })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        document.getElementById(rowId).style.display = 'none';
-                    } else {
-                        alert("Erro ao remover convidado.");
-                    }
-                });
-            }
+    const langVars = {{ lang | tojson }};
+    function deleteGuest(email, rowId) {
+        // Use the translated confirmation message
+        if (confirm(langVars.admin_confirm_delete)) {
+            fetch('/admin/delete', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: email })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById(rowId).style.display = 'none';
+                } else {
+                    // Use the translated error message
+                    alert(langVars.admin_error_delete);
+                }
+            })
+            .catch(err => {
+                console.error("Error:", err);
+                alert(langVars.admin_error_delete);
+            });
         }
+    }
     </script>
 </body>
 </html>

@@ -32,5 +32,8 @@
     "admin_col_pokemon": "Pokémon",
     "admin_col_date": "Data",
     "admin_col_actions": "Ações",
-    "admin_btn_delete": "Excluir"
+    "admin_btn_delete": "Excluir",
+    "admin_no_guests": "Nenhum convidado ainda.",
+    "admin_confirm_delete": "Tem certeza que deseja remover este convidado?",
+    "admin_error_delete": "Erro ao remover convidado."
 }
