@@ -1,13 +1,13 @@
 {
-    "title": "Festa do Fabrício!",
-    "message_template": "Faça como o {name} e venha capturar a diversão no meu aniversário!",
-    "date": "Sábado, 12 de Outubro",
-    "location": "Cidade de Pallet (Minha Casa)",
-    "time": "14:00 - Temos que pegar!",
+    "title": "Fabrício's Party!",
+    "message_template": "Be like {name} and catch the fun at my birthday!",
+    "date": "Saturday, Oct 12th",
+    "location": "Pallet Town (My House)",
+    "time": "2:00 PM - Gotta catch 'em all!",
     "theme": "auto",
     "show_theme_button": true,
-    "email_subject": "Você está oficialmente convidado! 🎉",
-    "email_message": "Obrigado por confirmar presença, {guest_name}! Mal podemos esperar para te ver lá. Não esqueça de trazer a sua Pokédex!",
+    "email_subject": "You are officially invited! 🎉",
+    "email_message": "Thanks for RSVPing, {guest_name}! We can't wait to see you there. Be sure to bring your Pokédex!",
     "calendar_start": "20261012T170000Z",
     "calendar_end": "20261012T220000Z"
 }
