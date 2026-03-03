@@ -4,6 +4,10 @@ A full-stack, containerized web application built with Python and Flask that gen
 
 It includes a built-in RSVP system that saves guest data locally and automatically sends a themed HTML confirmation email.
 
+## 🚀 Live Demo
+Check out the interactive demo here: [Live PokeInvite Demo](https://poke-invite-demo.onrender.com)
+*Note: In the demo version, emails are simulated and data is not persisted for privacy.*
+
 ## ✨ Features
 * **Dynamic Theming:** Extracts the predominant Hex color from the Pokémon's image and perfectly themes the page.
 * **Smart Contrast:** Uses Relative Luminance calculations to automatically switch text between light and dark to ensure readability.
