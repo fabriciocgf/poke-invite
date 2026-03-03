@@ -59,11 +59,11 @@ def favicon():
 @app.route('/')
 def index():
     config = load_config()
-    lang = load_lang() # Load the language
+    lang = load_lang()
     poke_id = request.args.get('id')
     
     if poke_id:
-        padded_filename = f"{int(poke_id):04d}.png"
+        padded_filename = f"{int(poke_id):04d}.webp" 
         chosen_pokemon = next((p for p in pokemon_data if p['filename'] == padded_filename), None)
         if not chosen_pokemon: chosen_pokemon = random.choice(pokemon_data)
     else:
@@ -71,7 +71,8 @@ def index():
         
     poke_name = chosen_pokemon.get("name", "Pikachu")
     color = chosen_pokemon.get("predominant_color", "#ffcb05")
-    filename = chosen_pokemon.get("filename", "0025.png")
+    
+    filename = chosen_pokemon.get("filename", "0025.webp") 
 
     contrast_color = get_contrast_color(color)
     highlighted_name = f"<span class='highlight-badge' style='background-color: {color}; color: {contrast_color};'>{poke_name}</span>"
@@ -82,7 +83,7 @@ def index():
         pokemon=chosen_pokemon,
         all_pokemon=pokemon_data,
         config=config,
-        lang=lang, # Pass it to the HTML!
+        lang=lang,
         message=formatted_message,
         color=color,
         contrast_color=contrast_color,
