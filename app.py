@@ -280,4 +280,4 @@ def admin_logout():
     return redirect(url_for('admin'))
 
 if __name__ == '__main__':
-    app.run(host="192.168.0.17",debug=True, port=5000)
+    app.run(debug=True, port=5000)
