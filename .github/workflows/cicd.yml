@@ -1,4 +1,6 @@
 name: PokeInvite CI/CD Security Pipeline
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 # Etapa 3: Controle de versão com ramificações
 on:
