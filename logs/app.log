@@ -1,0 +1,4 @@
+2026-06-13 11:21:33,317 WARNING: Unauthorized guest deletion attempt from IP: 127.0.0.1 [in C:\Projetos\PokeInvite\app.py:322]
+2026-06-13 11:21:58,545 WARNING: Unauthorized guest deletion attempt from IP: 127.0.0.1 [in C:\Projetos\PokeInvite\app.py:322]
+2026-06-13 11:28:27,003 WARNING: Unauthorized guest deletion attempt from IP: 127.0.0.1 [in C:\Projetos\PokeInvite\app.py:329]
+2026-06-13 11:28:59,080 WARNING: Unauthorized guest deletion attempt from IP: 127.0.0.1 [in C:\Projetos\PokeInvite\app.py:329]

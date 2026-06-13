@@ -275,6 +275,20 @@
             background: rgba(46, 204, 113, 0.15);
             color: #2ecc71;
             border: 1px solid #2ecc71;
+            animation: bounceIn 0.5s ease;
+        }
+        @keyframes bounceIn {
+            0% { opacity: 0; transform: scale(0.3); }
+            50% { opacity: 1; transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); }
+        }
+        .cal-btn {
+            background-color: #4285F4 !important;
+            color: white !important;
+            display: none;
+            margin-top: 15px;
+            width: 100%;
         }
         #rsvpMessage.error {
             display: block;
@@ -357,6 +371,8 @@
             <input type="text" id="guestName" placeholder="{{ lang.placeholder_name }}" required>
             <input type="email" id="guestEmail" placeholder="{{ lang.placeholder_email }}" required>
             
+            <a id="calBtn" href="#" target="_blank" class="primary-btn cal-btn">{{ lang.btn_add_calendar }}</a>
+
             <div class="btn-group">
                 <button class="primary-btn cancel-btn" onclick="closeModal()" id="cancelBtn">{{ lang.btn_cancel }}</button>
                 <button class="primary-btn" onclick="submitRSVP()" id="submitBtn">{{ lang.btn_confirm }}</button>
@@ -404,6 +420,7 @@
             document.getElementById('cancelBtn').innerText = langVars.btn_cancel;
             document.getElementById('rsvpInstructions').style.display = 'block';
             document.getElementById('rsvpTitle').innerText = langVars.modal_title;
+            document.getElementById('calBtn').style.display = 'none';
         }
 
         function closeModal() { 
@@ -415,6 +432,7 @@
             const email = document.getElementById('guestEmail').value;
             const btn = document.getElementById('submitBtn');
             const msgBox = document.getElementById('rsvpMessage');
+            const calBtn = document.getElementById('calBtn');
 
             msgBox.className = '';
             msgBox.style.display = 'none';
@@ -453,6 +471,11 @@
                     document.getElementById('rsvpInstructions').style.display = 'none';
                     btn.style.display = 'none'; 
                     
+                    if (data.cal_link) {
+                        calBtn.href = data.cal_link;
+                        calBtn.style.display = 'block';
+                    }
+
                     document.getElementById('cancelBtn').innerText = langVars.btn_close;
                 } else {
                     msgBox.className = 'error';

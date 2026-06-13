@@ -3,8 +3,12 @@ services:
     build: .
     container_name: poke-invite-web
     restart: unless-stopped
+    depends_on:
+      - syslog
     env_file:
       - .env
+    environment:
+      - SYSLOG_ADDRESS=syslog:514
     ports:
       # Exposes the app to your PC's localhost:5000
       - "5000:5000"
@@ -14,3 +18,13 @@ services:
       # Allows you to edit the event details live
       - ./config.json:/app/config.json
       - ./lang.json:/app/lang.json
+      - ./logs:/app/logs
+
+  syslog:
+    image: rsyslog/syslog_docker
+    container_name: poke-invite-syslog
+    restart: unless-stopped
+    ports:
+      - "514:514/udp"
+    volumes:
+      - ./logs/syslog:/var/log

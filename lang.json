@@ -16,6 +16,7 @@
     "btn_close": "Fechar",
     "btn_sending": "Enviando...",
     "msg_error_empty": "Por favor, preencha seu nome e e-mail!",
+    "msg_error_invalid_email": "Por favor, insira um e-mail válido!",
     "msg_error_duplicate": "Você já confirmou presença! Nos vemos lá.",
     "msg_success": "Obrigado por confirmar presença!",
     "msg_error_server": "Erro no servidor! Por favor, tente novamente.",
@@ -35,5 +36,15 @@
     "admin_btn_delete": "Excluir",
     "admin_no_guests": "Nenhum convidado ainda.",
     "admin_confirm_delete": "Tem certeza que deseja remover este convidado?",
-    "admin_error_delete": "Erro ao remover convidado."
+    "admin_error_delete": "Erro ao remover convidado.",
+    "admin_error_password": "Senha incorreta!",
+    "admin_error_unauthorized": "Não autorizado!",
+    "admin_error_csrf": "Token CSRF inválido!",
+    "msg_success_email_skipped": "Obrigado por confirmar presença! (Confirmação por e-mail indisponível)",
+    "cal_details": "Mal posso esperar para te ver lá!",
+    "csv_col_name": "Nome",
+    "csv_col_email": "E-mail",
+    "csv_col_pokemon": "Pokémon",
+    "csv_col_color": "Cor",
+    "csv_col_timestamp": "Data/Hora"
 }

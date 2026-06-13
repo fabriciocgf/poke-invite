@@ -66,6 +66,7 @@
                             <th>{{ lang.admin_col_name }}</th>
                             <th>{{ lang.admin_col_email }}</th>
                             <th>{{ lang.admin_col_pokemon }}</th>
+                            <th>{{ lang.admin_col_date }}</th>
                             <th>{{ lang.admin_col_actions }}</th>
                         </tr>
                     </thead>
@@ -75,13 +76,14 @@
                             <td>{{ g.name }}</td>
                             <td>{{ g.email }}</td>
                             <td><span class="badge" style="background: {{ g.color }}; color: {{ g.contrast_color }};">{{ g.pokemon }}</span></td>
+                            <td><small>{{ g.timestamp.split('.')[0] if g.timestamp else '-' }}</small></td>
                             <td>
                                 <button class="btn btn-danger" style="padding: 5px 10px; font-size: 0.8em;" onclick="deleteGuest('{{ g.email }}', 'row-{{ loop.index }}')">{{ lang.admin_btn_delete }}</button>
                             </td>
                         </tr>
                         {% else %}
                         <tr>
-                            <td colspan="4" style="text-align: center;">{{ lang.admin_no_guests }}</td>
+                            <td colspan="5" style="text-align: center;">{{ lang.admin_no_guests }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -92,13 +94,18 @@
 
     <script>
     const langVars = {{ lang | tojson }};
+    const csrfToken = "{{ csrf_token }}";
+
     function deleteGuest(email, rowId) {
         // Use the translated confirmation message
         if (confirm(langVars.admin_confirm_delete)) {
             fetch('/admin/delete', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: email })
+                body: JSON.stringify({ 
+                    email: email,
+                    csrf_token: csrfToken
+                })
             })
             .then(response => response.json())
             .then(data => {
@@ -106,7 +113,7 @@
                     document.getElementById(rowId).style.display = 'none';
                 } else {
                     // Use the translated error message
-                    alert(langVars.admin_error_delete);
+                    alert(data.message || langVars.admin_error_delete);
                 }
             })
             .catch(err => {
