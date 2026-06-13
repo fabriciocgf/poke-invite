@@ -1,8 +1,9 @@
 name: PokeInvite CI/CD Security Pipeline
+
+# Evita os avisos de depreciação do Node.js 20
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
-# Etapa 3: Controle de versão com ramificações
 on:
   push:
     branches: [ "main", "staging", "development" ]
@@ -37,7 +38,7 @@ jobs:
         run: pytest tests/
 
   # ==========================================
-  # ETAPA 4: ANÁLISE ESTÁTICA (SAST)
+  # ETAPA 4: ANÁLISE ESTÁTICA (SAST) E DEPENDÊNCIAS
   # ==========================================
   security-sast:
     runs-on: ubuntu-latest
@@ -54,7 +55,6 @@ jobs:
         run: pip install bandit
 
       - name: Executar Bandit (Análise de Código)
-        # Ignora a pasta de testes e venv
         run: bandit -r . -x ./tests,./venv -f html -o bandit-report.html || true
 
       - name: Salvar Relatório Bandit
@@ -65,6 +65,7 @@ jobs:
 
       - name: OWASP Dependency-Check
         uses: dependency-check/Dependency-Check_Action@main
+        continue-on-error: true # Impede que o pipeline falhe se a API pública estourar o limite
         with:
           project: 'PokeInvite'
           path: '.'
@@ -87,9 +88,10 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Criar arquivo .env temporário para CI/CD
+        # Usa aspas simples e $$ para o Docker não confundir o hash com variáveis
         run: |
           echo "FLASK_SECRET_KEY=ci-test-key-123" >> .env
-          echo "ADMIN_PASSWORD_HASH=scrypt:32768:8:1\$dummy\$dummy" >> .env
+          echo 'ADMIN_PASSWORD_HASH=scrypt:32768:8:1$$dummy$$dummy' >> .env
           echo "SMTP_EMAIL=test@test.com" >> .env
           echo "SMTP_PASSWORD=dummy" >> .env
 
@@ -97,14 +99,22 @@ jobs:
         run: docker compose up -d --build
 
       - name: Aguardar inicialização do servidor
-        run: sleep 10
+        # Espera 15s e tenta conectar na porta 5000 antes de avançar para o ZAP
+        run: |
+          echo "A aguardar a inicialização do Flask..."
+          sleep 15
+          curl --retry 5 --retry-delay 5 --retry-connrefused http://localhost:5000
 
       - name: Executar OWASP ZAP (Análise Dinâmica - DAST)
         uses: zaproxy/action-baseline@v0.12.0
         with:
           target: 'http://localhost:5000'
           cmd_options: '-a'
-          fail_action: false # Evita que o pipeline pare se o ZAP achar vulnerabilidades (gera apenas o relatório)
+          fail_action: false # Gera os alertas na aba Security, mas não chumba a pipeline
+
+      - name: Extrair logs do Docker (Em caso de falha)
+        if: failure()
+        run: docker compose logs
 
       - name: Parar ambiente de Stage
         if: always()
