@@ -21,9 +21,13 @@ services:
       - ./logs:/app/logs
 
   syslog:
-    image: ubuntu/rsyslog:edge
+    # Nova imagem oficial para recebimento de logs
+    image: rsyslog/rsyslog-collector:latest
     container_name: poke-invite-syslog
     restart: unless-stopped
+    environment:
+      # Ativa explicitamente a escuta do servidor na porta 514
+      - ENABLE_UDP=on
     ports:
       - "514:514/udp"
     volumes:
