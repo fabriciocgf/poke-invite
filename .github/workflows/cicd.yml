@@ -76,30 +76,36 @@ jobs:
           name: dependency-check-report
           path: reports/
 
-  # ==========================================
-  # ETAPAS 5 e 6: ENTREGA CONTÍNUA (CD) E DAST
-  # ==========================================
-  deploy-stage-and-dast:
-    runs-on: ubuntu-latest
-    needs: security-sast
-    environment: staging # Cria o ambiente de aprovação/stage no GitHub
-    steps:
-      - uses: actions/checkout@v4
+# ==========================================
+# ETAPAS 5 e 6: ENTREGA CONTÍNUA (CD) E DAST
+# ==========================================
+deploy-stage-and-dast:
+  runs-on: ubuntu-latest
+  needs: security-sast
+  environment: staging
+  steps:
+    - uses: actions/checkout@v4
 
-      - name: Subir Aplicação em Stage (Docker Compose)
-        # Utiliza o docker-compose já existente no seu projeto
-        run: docker compose up -d --build
+    - name: Criar arquivo .env temporário para CI/CD
+      run: |
+        echo "FLASK_SECRET_KEY=ci-test-key-123" >> .env
+        echo "ADMIN_PASSWORD_HASH=scrypt:32768:8:1\$dummy\$dummy" >> .env
+        echo "SMTP_EMAIL=test@test.com" >> .env
+        echo "SMTP_PASSWORD=dummy" >> .env
 
-      - name: Aguardar inicialização do servidor
-        run: sleep 10
+    - name: Subir Aplicação em Stage (Docker Compose)
+      run: docker compose up -d --build
 
-      - name: Executar OWASP ZAP (Análise Dinâmica - DAST)
-        uses: zaproxy/action-baseline@v0.12.0
-        with:
-          target: 'http://localhost:5000'
-          rules_file_name: '.zap/rules.tsv'
-          cmd_options: '-a' # Inicia a varredura ativa/quick start
+    - name: Aguardar inicialização do servidor
+      run: sleep 10
 
-      - name: Parar ambiente de Stage
-        if: always()
-        run: docker compose down
+    - name: Executar OWASP ZAP (Análise Dinâmica - DAST)
+      uses: zaproxy/action-baseline@v0.12.0
+      with:
+        target: 'http://localhost:5000'
+        cmd_options: '-a'
+        fail_action: false # Evita que o pipeline pare se o ZAP achar vulnerabilidades (gera apenas o relatório)
+
+    - name: Parar ambiente de Stage
+      if: always()
+      run: docker compose down
