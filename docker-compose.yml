@@ -21,7 +21,7 @@ services:
       - ./logs:/app/logs
 
   syslog:
-    image: rsyslog/syslog_docker
+    image: ubuntu/rsyslog:edge
     container_name: poke-invite-syslog
     restart: unless-stopped
     ports:
